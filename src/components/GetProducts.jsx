@@ -7,9 +7,14 @@ const GetProducts = () => {
   let [products, setProducts] = useState([]);
   let [loading, setLoading] = useState("");
   let [error, setError] = useState("");
+  let [gypsum, setGypsum] = useState([]);
+  let [paint, setPaint] = useState([]);
+  let [nails, setNails] = useState([]);
+  let [search_word, setSearchWord] = useState("");
+  let [filtered_products, setFilteredProducts] = useState([]);
 
   //   base url for image location
-  const img_url = "https://alvinnjiru.alwaysdata.net/static/images/";
+  const img_url = "https://leyonce.alwaysdata.net/static/images/";
 
   let navigator = useNavigate();
 
@@ -20,12 +25,24 @@ const GetProducts = () => {
 
     try {
       const response = await axios.get(
-        "https://alvinnjiru.alwaysdata.net/api/get_products",
+        "https://leyonce.alwaysdata.net/api/get_products",
       );
       console.log(response);
       if (response.status === 200) {
         setLoading("");
         setProducts(response.data);
+
+        let gypsum_products = response.data.filter(
+          (product) => product.product_category === "gypsum",
+        );
+
+        setGypsum(gypsum_products);
+
+        let nail_products = response.data.filter(
+          (product) => product.product_category === "nails",
+        );
+
+        setNails(nail_products);
       }
     } catch (error) {
       setLoading("");
@@ -38,16 +55,99 @@ const GetProducts = () => {
   }, []);
   console.log("products: ", products);
 
+  const handleSearch = (search_word) => {
+    let filterProducts = products.filter((product) =>
+      product.product_name.includes(search_word),
+    );
+    setFilteredProducts(filterProducts);
+  };
+
+  useEffect(() => {
+    handleSearch(search_word);
+  }, [search_word]);
+
   return (
-    <div className="row">
+    <div className="row justify-conten-center">
       <Navbar />
       <h3>Available Products</h3>
       <h5 className="text-warning">{loading}</h5>
       <h5 className="text-danger">{error}</h5>
 
+      <div className="input-group m-3">
+        <input
+          type="text"
+          placeholder="Search product by name"
+          className="form-control"
+          value={search_word}
+          onChange={(e) => {
+            setSearchWord(e.target.value);
+          }}
+        />
+      </div>
+      <br />
+      <hr />
+
+      {filtered_products.map((product) => (
+        <div className="col-md-3 justify-content-center mb-4">
+          <div className="card shadow card-margin">
+            <img
+              src={img_url + product.product_image}
+              alt=""
+              className="product_img mt-4"
+            />
+
+            <div className="card-body">
+              <h5 className="mt-2">{product.product_name}</h5>
+              <p className="text-muted">{product.product_description}</p>
+              <b className="text-warning">{product.product_cost}</b>
+              <br />
+              <button
+                className="btn btn-dark"
+                onClick={() => {
+                  navigator("/makepayment", { state: { product } });
+                }}
+              >
+                Purchase Now
+              </button>
+            </div>
+          </div>
+        </div>
+      ))}
+
       {/* map/loop over the product array to access one at a time */}
 
-      {products.map((product) => (
+      <h2 className="text-center my-2 p-4 bg-dark text-white">Gypsum</h2>
+
+      {gypsum.map((product) => (
+        <div className="col-md-3 justify-content-center mb-4">
+          <div className="card shadow card-margin">
+            <img
+              src={img_url + product.product_image}
+              alt=""
+              className="product_img mt-4"
+            />
+
+            <div className="card-body">
+              <h5 className="mt-2">{product.product_name}</h5>
+              <p className="text-muted">{product.product_description}</p>
+              <b className="text-warning">{product.product_cost}</b>
+              <br />
+              <button
+                className="btn btn-dark"
+                onClick={() => {
+                  navigator("/makepayment", { state: { product } });
+                }}
+              >
+                Purchase Now
+              </button>
+            </div>
+          </div>
+        </div>
+      ))}
+
+      <h2 className="text-center my-2 p-4 bg-dark text-white">Nails</h2>
+
+      {nails.map((product) => (
         <div className="col-md-3 justify-content-center mb-4">
           <div className="card shadow card-margin">
             <img
