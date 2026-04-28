@@ -53,13 +53,6 @@ const GetProducts = () => {
   }, []);
   console.log("products: ", products);
 
-  const handleSearch = (search_word) => {
-    let filterProducts = products.filter((product) =>
-      product.product_name.includes(search_word),
-    );
-    setFilteredProducts(filterProducts);
-  };
-
   return (
     <div className="row justify-conten-center">
       <Navbar />
@@ -72,9 +65,6 @@ const GetProducts = () => {
           type="text"
           placeholder="Search product by name"
           className="form-control"
-          onChange={(e) => {
-            () => handleSearch(e.target.value);
-          }}
         />
       </div>
       <br />
