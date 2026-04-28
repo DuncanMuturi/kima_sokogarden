@@ -8,9 +8,7 @@ const GetProducts = () => {
   let [loading, setLoading] = useState("");
   let [error, setError] = useState("");
   let [gypsum, setGypsum] = useState([]);
-  let [paint, setPaint] = useState([]);
   let [nails, setNails] = useState([]);
-  let [search_word, setSearchWord] = useState("");
   let [filtered_products, setFilteredProducts] = useState([]);
 
   //   base url for image location
@@ -62,10 +60,6 @@ const GetProducts = () => {
     setFilteredProducts(filterProducts);
   };
 
-  useEffect(() => {
-    handleSearch(search_word);
-  }, [search_word]);
-
   return (
     <div className="row justify-conten-center">
       <Navbar />
@@ -80,7 +74,7 @@ const GetProducts = () => {
           className="form-control"
           value={search_word}
           onChange={(e) => {
-            setSearchWord(e.target.value);
+            setSearchWord(() => handleSearch(e.target.value));
           }}
         />
       </div>

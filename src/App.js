@@ -4,7 +4,6 @@ import SignUpComponent from "./components/SignUpComponent";
 import SignInComponent from "./components/SignInComponent";
 import AddProductComponent from "./components/AddProductComponent";
 import GetProducts from "./components/GetProducts";
-import Navbar from "./components/Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
