@@ -72,9 +72,8 @@ const GetProducts = () => {
           type="text"
           placeholder="Search product by name"
           className="form-control"
-          value={search_word}
           onChange={(e) => {
-            setSearchWord(() => handleSearch(e.target.value));
+            () => handleSearch(e.target.value);
           }}
         />
       </div>
