@@ -9,7 +9,6 @@ const GetProducts = () => {
   let [error, setError] = useState("");
   let [gypsum, setGypsum] = useState([]);
   let [nails, setNails] = useState([]);
-  let [filtered_products, setFilteredProducts] = useState([]);
 
   //   base url for image location
   const img_url = "https://leyonce.alwaysdata.net/static/images/";
@@ -69,34 +68,6 @@ const GetProducts = () => {
       </div>
       <br />
       <hr />
-
-      {filtered_products.map((product) => (
-        <div className="col-md-3 justify-content-center mb-4">
-          <div className="card shadow card-margin">
-            <img
-              src={img_url + product.product_image}
-              alt=""
-              className="product_img mt-4"
-            />
-
-            <div className="card-body">
-              <h5 className="mt-2">{product.product_name}</h5>
-              <p className="text-muted">{product.product_description}</p>
-              <b className="text-warning">{product.product_cost}</b>
-              <br />
-              <button
-                className="btn btn-dark"
-                onClick={() => {
-                  navigator("/makepayment", { state: { product } });
-                }}
-              >
-                Purchase Now
-              </button>
-            </div>
-          </div>
-        </div>
-      ))}
-
       {/* map/loop over the product array to access one at a time */}
 
       <h2 className="text-center my-2 p-4 bg-dark text-white">Gypsum</h2>
